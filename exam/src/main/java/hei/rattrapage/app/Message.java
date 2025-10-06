@@ -1,26 +1,12 @@
 package hei.rattrapage.app;
 
-import hei.rattrapage.entities.User;
+import hei.rattrapage.app.entities.User;
 import java.time.Instant;
 
-public record Message(
-    String content,
-    User user,
-    Instant date,
-    boolean isPrivate,
-    Publication publication
-) {
-    public Message(
-        String content,
-        User user,
-        Instant date,
-        boolean isPrivate,
-        Publication publication
-    ) {
-        this(content, user, date, isPrivate, publication);
+public record Message(String content, User author, Instant createdAt, boolean confidential) {
+    public Message {
+        if (content == null || content.isBlank()) throw new IllegalArgumentException("content is required");
+        if (author == null) throw new IllegalArgumentException("author is required");
+        if (createdAt == null) createdAt = Instant.now();
     }
-
-    public User getAuthor() {
-        return user;
-    }
-}
+}() { }

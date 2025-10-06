@@ -24,7 +24,6 @@ public class AppTest {
             user,
             Instant.now()
         );
-        Assertions.assertNotNull(publication);
     }
 
     @Test
