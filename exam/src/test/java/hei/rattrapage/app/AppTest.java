@@ -1,33 +1,42 @@
 package hei.rattrapage.app;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-import hei.rattrapage.app.Publication;
-import hei.rattrapage.app.entities.User;
+import hei.rattrapage.app.entities.*;
 import java.time.Instant;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest {
-
-    @BeforeEach
-    public void setUp() {
-        /** create a publication by user */
-        User user = new User("USR000", "john.doe@example.com", "John", "Doe");
-        Publication publication = new Publication(
-            "PUB001",
-            "Ma super publication",
-            "link:https://example.com",
-            user,
-            Instant.now()
-        );
-    }
+public class PublicationTest {
 
     @Test
-    public void shouldAnswerWithTrue() {
-        assertTrue(true);
+    void creationAndAdditionOfMessages() {
+        User owner = new RegisteredUser(
+            "USR000",
+            "john.doe@example.com",
+            "Doe",
+            "John"
+        );
+        Publication pub = new Publication(
+            "PUB001",
+            "link:https://example.com",
+            owner,
+            Instant.now()
+        );
+
+        User anon1 = new AnonymousUser("ANON123");
+        User anon2 = new AnonymousUser("ANON456");
+        User reg2 = new RegisteredUser(
+            "USR777",
+            "jane.doe@example.com",
+            "Doe",
+            "Jane"
+        );
+
+        pub.addMessage(new Message("Salut", anon1, Instant.now(), false));
+        pub.addMessage(new Message("Hello", reg2, Instant.now(), true));
+        pub.addMessage(new Message("Re", anon1, Instant.now(), false));
+        pub.addMessage(new Message("Yo", anon2, Instant.now(), false));
+
+        assertEquals(3, pub.getAuthors().size());
     }
 }
