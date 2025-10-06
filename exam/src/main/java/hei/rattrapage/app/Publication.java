@@ -32,6 +32,6 @@ public class Publication {
     }
 
     public void printAuthors() {
-        getAuthors().forEach(u -> System.out.println(u.display()));
+        getAuthors().forEach(u -> System.out.println(u.toString()));
     }
 }

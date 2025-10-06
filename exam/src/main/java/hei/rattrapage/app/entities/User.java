@@ -26,6 +26,11 @@ final class AnonymousUser implements User {
     public int hashCode() {
         return id.hashCode();
     }
+
+    @Override
+    public String toString() {
+        return id;
+    }
 }
 
 final class RegisteredUser implements User {
@@ -52,5 +57,10 @@ final class RegisteredUser implements User {
     @Override
     public boolean equals(Object o) {
         return (o instanceof User u) && id.equals(u.id());
+    }
+
+    @Override
+    public String toString() {
+        return id + " " + email + " " + lastName + " " + firstName;
     }
 }
